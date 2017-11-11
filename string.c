@@ -4,31 +4,29 @@
 #include <assert.h>
 
 #include "buffer.h"
+#include "string.h"
 
-struct String {
-    struct Class super;
-    struct Buffer* buf;
-    char* text;
-    size_t (*len)(struct String*);
-};
+char* String_ptr(struct String* self) {
+    assert(self);
+    return self->text;
+}
 
-size_t String_len(struct String* _self) {
-    return strnlen(_self->buf->data, _self->buf->size);
+size_t String_len(struct String* self) {
+    assert(self);
+    return strnlen(self->text, Buffer_size(self->buf));
 }
 
 void String_ctor(void* _self, va_list* args) {
-    struct String* s = _self;
+    struct String* self = _self;
     const char* text = va_arg(*args, const char*);
-    assert(s);
+    assert(self);
+    assert(text);
 
     // Allocate and set up string buffer
-    s->buf = new(Buffer, strlen(text) + 1);
-    assert(s->buf);
-    s->text = s->buf->data;
-    strcpy(s->text, text);
-
-    // Initialise string methods
-    s->len = String_len;
+    self->buf = new(Buffer, strlen(text) + 1);
+    assert(self->buf);
+    self->text = Buffer_ptr(self->buf);
+    strcpy(self->text, text);
 }
 
 void String_dtor(void* _self) {

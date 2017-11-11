@@ -9,8 +9,11 @@ struct Buffer {
     char* data;
 };
 
-extern void Buffer_ctor(void*, va_list*);
-extern void Buffer_dtor(void*);
+size_t Buffer_size(struct Buffer*);
+char* Buffer_ptr(struct Buffer*);
+
+void Buffer_ctor(void*, va_list*);
+void Buffer_dtor(void*);
 
 static const struct Class Buffer = {
     .size = sizeof(struct Buffer),

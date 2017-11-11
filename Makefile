@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 -g
+CFLAGS=-Wall -Wextra -Wpedantic -O2 -g
 
 all: ooc
 

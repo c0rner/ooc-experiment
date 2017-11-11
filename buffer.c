@@ -6,18 +6,28 @@
 #include "buffer.h"
 #include "class.h"
 
+size_t Buffer_size(struct Buffer* self) {
+    assert(self);
+    return self->size;
+}
+
+char* Buffer_ptr(struct Buffer* self) {
+    assert(self);
+    return self->data;
+}
+
 void Buffer_ctor(void* _self, va_list* args) {
-    struct Buffer* b = _self;
+    struct Buffer* self = _self;
     const size_t size = va_arg(*args, const size_t);
 
-    assert(b);
-    b->size = size;
-    b->data = calloc(1, size);
-    assert(b->data);
+    assert(self);
+    self->size = size;
+    self->data = calloc(1, size);
+    assert(self->data);
 }
 
 void Buffer_dtor(void* _self) {
-    struct Buffer* b = _self;
-    assert(b);
-    free(b->data);
+    struct Buffer* self = _self;
+    assert(self);
+    free(self->data);
 }

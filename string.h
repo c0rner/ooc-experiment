@@ -7,11 +7,13 @@ struct String {
     struct Class super;
     struct Buffer* buf;
     char* text;
-    size_t (*len)(struct String*);
 };
 
-extern void String_ctor(void*, va_list*);
-extern void String_dtor(void*);
+char* String_ptr(struct String*);
+size_t String_len(struct String*);
+
+void String_ctor(void*, va_list*);
+void String_dtor(void*);
 
 static const struct Class String = {
     .size = sizeof(struct String),
